@@ -1,9 +1,13 @@
 import React from 'react';
+import { SearchBar } from './components/SearchBar.js';
 import ReactDOM from 'react-dom';
 
 const Index = () => {
   return (
-    <div>SooOOoooo much weather</div>
+    <div>
+      <SearchBar />
+    </div>
+
   )
 };
 
