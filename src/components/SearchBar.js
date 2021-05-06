@@ -1,14 +1,9 @@
 import React from 'react';
 import { getAutoLocations } from '../../server/api/autocomplete.js';
+import { getForecast5Day } from '../../server/api/forecast.js';
 import CardOptions from './CardOptions';
 import SelectedCard from './SelectedCard';
-
-// dream world (no time limit) to do list:
-//  - add incremental search to handleChange fn
-//  - sort option results by rank before render
-//  - add error handling
-//  - add regex validation to search
-//  - add 'search again' functionality after city is selected
+import ForecastContainer from './ForecastContainer';
 
 export class SearchBar extends React.Component {
   constructor() {
@@ -17,7 +12,8 @@ export class SearchBar extends React.Component {
       queryStr: '',
       options: [],
       selected: false,
-      selection: {}
+      selection: {},
+      forecast: []
     }
 
     this.handleChange = this.handleChange.bind(this);
@@ -58,7 +54,8 @@ export class SearchBar extends React.Component {
   }
 
   handleForecast = key => {
-    console.log('key:', key);
+    getForecast5Day(key)
+      .then(res => this.setState({forecast: res.DailyForecasts.slice(0, 3)}));
   }
 
   render() {
@@ -88,8 +85,9 @@ export class SearchBar extends React.Component {
                   <div className="card-body col-auto">
                     {/* either render all options OR the selected option */}
                     {this.state.selected ?
-                        <SelectedCard city={this.state.selection} handleForecast={this.handleForecast} />
+                        <SelectedCard city={this.state.selection} forecast={this.state.forecast} handleForecast={this.handleForecast} />
                       : <CardOptions options={this.state.options} handleSelect={this.handleSelect} />}
+                    {this.state.forecast.length > 0 && <ForecastContainer forecast={this.state.forecast} />}
                   </div>
               </form>
           </div>

@@ -1,7 +1,6 @@
 import React from 'react';
 
 export default function SelectedCard(props) {
-  console.log('props:', props);
   return (
     <div key={props.city.key} className="card">
         <div className="card-body">

@@ -12,13 +12,15 @@ const mockResponse = {
 app.use(express.static(DIST_DIR));
 
 app.get('/api', (req, res) => {
+  console.log('getting /api route');
   res.send(mockResponse);
 });
 
 app.get('/', (req, res) => {
- res.sendFile(HTML_FILE);
+  console.log('getting / route');
+  res.sendFile(HTML_FILE);
 });
 
 app.listen(port, function () {
- console.log('App listening onnnnn port: ' + port);
+  console.log('App listening onnnnn port: ' + port);
 });
